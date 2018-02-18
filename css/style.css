@@ -1,0 +1,310 @@
+body {
+    background-color: black;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/*** Map ***/
+#map {
+    /* padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100px;
+    max-height: 100%;
+    text-align: left;
+    overflow: hidden; */
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top: 33px;
+    bottom: 33px;
+}
+
+/*** Fix Bootstrap modal bug ***/
+body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+    margin-right: 0;
+    margin-top: 0;
+  }
+
+  #headerTitle {
+      position: absolute;
+      left: 10px;
+      top: 2px;
+      color: white;
+      font-size: 20px;
+  }
+  
+  /*** Bootstrap extensions and overrides ***/
+  .panel-fixed {
+    position: absolute;
+    top: 38px;
+    right: 10px;
+    margin-left: 60px;
+    width: 250px;
+    text-align: center;
+    z-index: 900;
+  }
+  
+  .panel-fixed .panel-body {
+    max-height: calc(100% - 60px);
+    overflow: auto;
+  }
+  
+.panel-fixed .panel-heading {
+    padding: 3px 10px;
+    cursor: pointer;
+    background-color: #000;
+    border-color: #000;
+}
+  .panel-fixed .panel-body .checkbox input[type=checkbox], .panel-fixed .panel-body .btn-toolbar .btn-group, .panel-fixed .panel-body.btn-toolbar .input-group  {
+    float: none;
+  }
+  
+  .panel-fixed .panel-body>.btn-toolbar+.btn-toolbar {
+    margin-top: 10px;
+  }
+  
+  .panel-fixed .btn-absolute {
+    position: absolute;
+    top: 4px;
+    right: 9px;
+    border: none;
+    outline: none;
+  }
+  
+  .panel-fixed .btn-absolute:hover,.panel-fixed .btn-absolute:focus,.panel-fixed .btn-absolute:active,.panel-fixed .btn-absolute .active {
+    box-shadow: none;
+    outline: none;
+    background-color: #428bca;
+  }
+  
+  /*** Media Queries ***/
+   @media (max-width: 600px) {
+      .panel-fixed {
+          width: 250px;
+      }
+  }
+
+  /* The CSS */
+select {
+  padding: 2px 5px 2px 8px;
+  margin: 0;
+  -webkit-border-radius:0;
+  -moz-border-radius:0;
+  border-radius:0;
+  background-image: url(../images/15xvbd5.png); 
+  background-repeat:no-repeat;
+  background-position: right center;
+  overflow: hidden;
+  color:#fff;
+  background-color: #000;
+  border:1 solid white;
+  outline:none;
+  display: inline-block;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  cursor:pointer;
+  min-width: 150px;
+}
+/* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select {padding-right:18px}
+}
+
+.whiteSelect select {
+  color: black;
+  background-color: white;
+  border-color: #999999;
+  margin-top: 5px;
+}
+
+
+/* Map scale overrides  */
+.leaflet-control-scale-line {
+  font-size: 9px;
+  padding: 1px 2px 1px 5px;
+  border-left: 1pt solid #999;
+  border-right: 2px solid black;
+  border-top: 1pt solid #999;
+  border-bottom: 1pt solid #999;
+  background-color: rgba(255,255,255,0.75);
+  color: black;
+  margin-left: 5px;
+  -moz-box-shadow: 3px 3px 3px #666;-webkit-box-shadow: 3px 3px 3px #666;
+  box-shadow: 3px 3px 3px #666;
+}
+.leaflet-control-scale-line:not(:first-child) {
+  border-left: 1pt solid #999;
+  border-right: 2px solid black;
+  border-top: 1pt solid #999;
+  border-bottom: 1pt solid #999;
+  margin-top: 2px;
+  -moz-box-shadow: 3px 3px 3px #666;-webkit-box-shadow: 3px 3px 3px #666;
+  box-shadow: 3px 3px 3px #666;
+}
+
+
+.shown {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+
+.baseMapLiStyle,
+.base-map-li {
+/*background-color: lightblue;*/
+/*font-size: 9px;*/
+cursor: pointer;
+font-family: Geneva,Arial,Helvetica,sans-serif;
+/*font-weight: bold;*/
+background: #006699;
+color: white;
+/*border: 1px solid gray;*/
+}
+
+#basemapUL .ui-selected,
+#base-map-ul .ui-selected {
+background: #930099;
+}
+
+#basemapUL,
+#base-map-ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+font-size: x-small;
+width: 100%;
+padding-left: 10px;
+}
+
+#basemapUL li,
+#base-map-ul li {
+float: left;
+margin: 5px 1px 5px 1px;
+padding: 2px;
+font-size: x-small;
+/*width: 145px;*/
+/*height: 133px;
+  line-height: 60px;*/
+}
+
+.fm_basemap_image {
+  width: 200px;
+  height: 125px;
+}
+
+#visibilityTable {
+  background-color: white;
+  color: black;
+  width: 100%;
+}
+
+.leaflet-right .leaflet-control {
+  margin: 5px;
+  opacity: 0.05;
+}
+
+.leaflet-right .leaflet-control:hover {
+  opacity: 0.75;
+}
+
+.leaflet-touch .leaflet-control-attribution {
+  opacity: 0;
+  display: none;
+}
+
+#topMenu {
+  position:absolute;
+  top: 3px;
+  right: 15px;
+}
+
+#bmPanelBody {
+  overflow-y: auto; 
+  overflow-x:hidden;
+  padding-bottom: 5px;
+  padding-top: 0;
+  padding-left: 8px;
+}
+
+#switchButton {
+  position: absolute; 
+  left: 10px; 
+  bottom: 3px; 
+  z-index: 999; 
+  border: 1px solid #ccc; 
+  background-color: #333333; 
+  color: white; 
+  padding: 2px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 150px;
+  text-align: center;
+}
+
+#switchButton:hover {
+  background-color: #666666;
+}
+
+.chevronButton {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #000000;
+  border-color: #000000;
+  position: absolute;
+  top: 4px;
+  right: 9px;
+  border: none;
+  outline: none;
+}
+
+.panel-primary {
+  border-color: #000000;
+  /* opacity: 0.35; */
+}
+
+.panel-primary:hover {
+  opacity: 1.0;
+}
+
+.leaflet-top.leaflet-left .leaflet-control {
+  margin: 5px;
+  /* opacity: 0.35; */
+}
+
+.leaflet-top.leaflet-left .leaflet-control:hover {
+  opacity: 1;
+}
+
+.topButton {
+  z-index: 999; 
+  border: 1px solid #ccc; 
+  background-color: #333333;
+  color: white; 
+  padding: 2px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 175px;
+}
+
+.topButton:hover {
+  background-color: #666666;
+}
+
+
+  

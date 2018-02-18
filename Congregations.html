@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+        <title>Calle Girasol Congregations</title>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" >
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+        <link rel="stylesheet" href="css/style.css">
+        <script>
+            function getParam(name) {
+                name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.search);
+                return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+            var paramValue = getParam("language").toLowerCase();
+
+            appLang = paramValue == 'spanish' ? paramValue : 'english';
+        </script>
+    </head>
+    <body>
+        <div id="map"></div>
+        <div id="baseMapPanel" class="panel panel-primary panel-fixed" style="display:none" >
+            <div id="bmHeader" class="panel-heading">
+                <h3 id="bmPanelTitle" class="panel-title" data-langId="mapStyle">Map Styles</h3>
+                <button id="bmchevron" class="chevronButton" title="Collapse">
+                    <span id="bmChevronIcon" class="glyphicon glyphicon-chevron-up"></span>
+                </button>
+            </div>
+            <div id="bmPanelBody" class="panel-body collapse in" style="padding-bottom: 10px;">
+                <div class="form text-left" style="margin-bottom: 5px; padding-bottom: 10px;">
+                    <div class="form-group">
+                        <div id='basemapList' >
+                            <!-- <div >Some styles are only available within a limited zoom range.</div> -->
+                            <ul id='basemapUL' class="baseMapListStyle"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rightPanel" class="panel panel-primary panel-fixed" style="display:block">
+                <div id="rightPanelHeader" class="panel-heading">
+                    <h3 id="rightPanelTitle" class="panel-title" data-langId="congregations">Congregations</h3>
+                    <button id="chevron" class="chevronButton" title="Collapse">
+                        <span id="rightChevronIcon" class="glyphicon glyphicon-chevron-up"></span>
+                    </button>
+                </div>
+                <div id="rightPanelBody" class="panel-body collapse in">
+                    <div class="form text-left">
+                        <div class="form-group">
+                            <input id="englishRadio" type="radio" name="langRadio" checked="checked" onchange="switchLanguage('english')" >&nbsp;<label id="englishRadioLabel" data-langId="englishCongs" >English Congregations</label>
+                            <div id="englishCongList" style="display: block; margin-left: 15px;">
+                                <input id="allEng" type="radio" name="switchEnglish" onchange="switchEnglishCongs(mergeLayer)" value="all" checked="checked">&nbsp;<label id="englishLabel" data-langId="allEnglish">All English congregations</label><br/>
+                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(FVLayer)" value="fv" >&nbsp;<label id="fvLabel" data-langId="frenchValley">French Valley</label><br/>
+                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(RHLayer)" value="rh" >&nbsp;<label id="rhLabel" data-langId="rollingHills">Rolling Hills</label><br/>
+                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(THLayer)" value="th" >&nbsp;<label id="thLabel" data-langId="temeculaHills">Temecula Hills</label><br/>
+                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(TVLayer)" value="tv" >&nbsp;<label id="tvLabel" data-langId="temeculaValley">Temecula Valley</label><br/>
+                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(WLayer)" value="will" >&nbsp;<label id="wLabel" data-langId="willows">Willows</label><br/>
+                            </div>
+                            <br/>
+                            <input id="spanishRadio" type="radio" name="langRadio" onchange="switchLanguage('spanish')">&nbsp;<label id="spanishRadioLabel" data-langId="spanishCongs">Spanish Congregations</label>
+                            <div id="spanishCongList" style="display: none; margin-left: 15px;">
+                                <input id="allSpan" type="radio" name="switchSpanish" onchange="switchSpanishCongs(spanLayer)" value="all" checked="checked">&nbsp;<label id="spanishLabel" data-langId="allSpanish">All Spanish congregations</label><br/>
+                                <input type="radio" name="switchSpanish" onchange="switchSpanishCongs(ESLayer)" value="fv" >&nbsp;<label id="esLabel" data-langId="eastSpanish">East Spanish Murrieta</label><br/>
+                                <input type="radio" name="switchSpanish" onchange="switchSpanishCongs(GSLayer)" value="fv" >&nbsp;<label id="gsLabel" data-langId="spanGarisol">Spanish Garisol</label><br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        <div id="headerTitle" data-langId="calleGarisolCongs">Calle Girasol Congregations</div>
+        <div id="topMenu">
+            <!-- <span id="menuTitle" data-langId="menu" style="color:white">Menu: </span>
+            <select id="menuDropdown" onchange="onMenuChange(this);">
+                <option value="Congregations" id="optionCong" data-langId="showCong" >Show Congregations</option>
+                <option value="Map Styles" id="optionStyle" data-langId="mapStyle" >Change Map Styles</option>
+            </select> -->
+            <button id="optionCong" class="topButton" data-langId="showCong" onclick="onMenuChange('Congregations')" style="display:none;">Choose Congregation</button>
+            <button id="optionStyle" class="topButton" data-langId="changeStyle" onclick="onMenuChange('Map Styles')" style="display:block;">Change Map Style</button>
+        </div>
+
+        <div id="switchButton" class="" data-langId="switchLanguage" onclick="switchCurrentLanguage();">Cambiar a Español</div>
+        
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKNCdMmalTM80ywcfQvlZQeYwLvUEPumc" async defer></script>
+
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="   crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+        <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
+
+        <script src="js/leaflet-providers.js"></script>
+        <script src="js/fuse.min.js"></script>
+        <script src="js/leaflet.label.js"></script>
+        <script src='js/Basemaps.js'></script>
+
+        <script src="data/MergeBoundaries.js" ></script>
+        <script src="data/SpanishBoundaries.js" ></script>
+    
+        <script src="js/lang.js"></script>
+        <script src="js/maps.js"></script>
+    
+    </body>
+</html>
