@@ -49,21 +49,20 @@
                 <div id="rightPanelBody" class="panel-body collapse in">
                     <div class="form text-left">
                         <div class="form-group">
-                            <input id="englishRadio" type="radio" name="langRadio" checked="checked" onchange="switchLanguage('english')" >&nbsp;<label id="englishRadioLabel" data-langId="englishCongs" >English Congregations</label>
+                            <div id="engListDiv" onclick="switchLanguage('english')" class="congregationBox" ><input id="englishRadio" type="radio" name="langRadio" checked="checked" >&nbsp;<label id="englishRadioLabel" data-langId="englishCongs" class="pointer" >English Congregations</label></div>
                             <div id="englishCongList" style="display: block; margin-left: 15px;">
-                                <input id="allEng" type="radio" name="switchEnglish" onchange="switchEnglishCongs(mergeLayer)" value="all" checked="checked">&nbsp;<label id="englishLabel" data-langId="allEnglish">All English congregations</label><br/>
-                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(FVLayer)" value="fv" >&nbsp;<label id="fvLabel" data-langId="frenchValley">French Valley</label><br/>
-                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(RHLayer)" value="rh" >&nbsp;<label id="rhLabel" data-langId="rollingHills">Rolling Hills</label><br/>
-                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(THLayer)" value="th" >&nbsp;<label id="thLabel" data-langId="temeculaHills">Temecula Hills</label><br/>
-                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(TVLayer)" value="tv" >&nbsp;<label id="tvLabel" data-langId="temeculaValley">Temecula Valley</label><br/>
-                                <input type="radio" name="switchEnglish" onchange="switchEnglishCongs(WLayer)" value="will" >&nbsp;<label id="wLabel" data-langId="willows">Willows</label><br/>
+                                <div id="allEngDiv" class="congregationBox selectedCong" onclick="switchEnglishCongs(mergeLayer,0)" ><input id="allEngRadio" type="radio" name="switchEnglish" onchange="switchEnglishCongs(mergeLayer)" value="allEng" checked="checked">&nbsp;<label id="englishLabel" data-langId="allEnglish" class="pointer">All English congregations</label></div>
+                                <div id="fvDiv" class="congregationBox" onclick="switchEnglishCongs(FVLayer,1)" ><input id="fvRadio" type="radio" name="switchEnglish" value="fv" >&nbsp;<label id="fvLabel" data-langId="frenchValley" class="pointer">French Valley</label></div>
+                                <div id="rhDiv" class="congregationBox" onclick="switchEnglishCongs(RHLayer,2)" ><input id="rhRadio" type="radio" name="switchEnglish" value="rh" >&nbsp;<label id="rhLabel" data-langId="rollingHills" class="pointer">Rolling Hills</label></div>
+                                <div id="thDiv" class="congregationBox" onclick="switchEnglishCongs(THLayer,3)" ><input id="thRadio" type="radio" name="switchEnglish" value="th" >&nbsp;<label id="thLabel" data-langId="temeculaHills" class="pointer">Temecula Hills</label></div>
+                                <div id="tvDiv" class="congregationBox" onclick="switchEnglishCongs(TVLayer,4)" ><input id="tvRadio" type="radio" name="switchEnglish" value="tv" >&nbsp;<label id="tvLabel" data-langId="temeculaValley" class="pointer">Temecula Valley</label></div>
+                                <div id="willDiv" class="congregationBox" onclick="switchEnglishCongs(WLayer,5)" ><input id="willRadio" type="radio" name="switchEnglish" value="will" >&nbsp;<label id="wLabel" data-langId="willows" class="pointer">Willows</label></div>
                             </div>
-                            <br/>
-                            <input id="spanishRadio" type="radio" name="langRadio" onchange="switchLanguage('spanish')">&nbsp;<label id="spanishRadioLabel" data-langId="spanishCongs">Spanish Congregations</label>
+                            <div id="spanListDiv" onclick="switchLanguage('spanish')" class="congregationBox" ><input id="spanishRadio" type="radio" name="langRadio" >&nbsp;<label id="spanishRadioLabel" data-langId="spanishCongs" class="pointer">Spanish Congregations</label></div>
                             <div id="spanishCongList" style="display: none; margin-left: 15px;">
-                                <input id="allSpan" type="radio" name="switchSpanish" onchange="switchSpanishCongs(spanLayer)" value="all" checked="checked">&nbsp;<label id="spanishLabel" data-langId="allSpanish">All Spanish congregations</label><br/>
-                                <input type="radio" name="switchSpanish" onchange="switchSpanishCongs(ESLayer)" value="fv" >&nbsp;<label id="esLabel" data-langId="eastSpanish">East Spanish Murrieta</label><br/>
-                                <input type="radio" name="switchSpanish" onchange="switchSpanishCongs(GSLayer)" value="fv" >&nbsp;<label id="gsLabel" data-langId="spanGarisol">Spanish Garisol</label><br/>
+                                <div id="allSpanDiv" class="congregationBox" onclick="switchSpanishCongs(spanLayer,0)"><input id="allSpanRadio" type="radio" name="switchSpanish" value="allSpan" checked="checked">&nbsp;<label id="spanishLabel" data-langId="allSpanish" class="pointer">All Spanish congregations</label></div>
+                                <div id="esmDiv" class="congregationBox" onclick="switchSpanishCongs(ESLayer,1)" ><input id="esmRadio" type="radio" name="switchSpanish" value="esm" >&nbsp;<label id="esLabel" data-langId="eastSpanish" class="pointer">East Spanish Murrieta</label></div>
+                                <div id="gsDiv" class="congregationBox" onclick="switchSpanishCongs(GSLayer,2)" ><input id="gsRadio" type="radio" name="switchSpanish" value="gs" >&nbsp;<label id="gsLabel" data-langId="spanGarisol" class="pointer">Spanish Garisol</label></div>
                             </div>
                         </div>
                     </div>
@@ -83,6 +82,7 @@
 
         <div id="switchButton" class="" data-langId="switchLanguage" onclick="switchCurrentLanguage();">Cambiar a Español</div>
         
+        <div id="coordsDiv" class="coordsStyle"><span>Lat/Lng: </span><span id="coords"></span></div>
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKNCdMmalTM80ywcfQvlZQeYwLvUEPumc" async defer></script>
 

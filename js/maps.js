@@ -8,6 +8,20 @@ var congColors = [
     "#b3b3ff"
 ];
 
+engLabelData = [
+    [], // place holder
+    [33.609,-117.142], // rh
+    [33.597,-117.103], // fv
+    [33.395,-116.802], // th
+    [33.525,-116.975], // tv
+    [33.569,-117.047] // w
+];
+spanLabelData = [
+    [], // place holder
+    [33.59,-117.125], //em
+    [33.555,-117.0137]
+]
+
 var rightPanel = document.getElementById("rightPanel")
 var rightHeader = document.getElementById("rightPanelHeader");
 var rightChevron = document.getElementById("rightChevronIcon");
@@ -20,25 +34,44 @@ var bmChevron = document.getElementById("bmChevronIcon");
 var bmBody = document.getElementById("bmPanelBody");
 var engList = document.getElementById("englishCongList");
 var spanList = document.getElementById("spanishCongList");
-var allEng = document.getElementById("allEng");
-var allSpan = document.getElementById("allSpan");
+var allEng = document.getElementById("allEngRadio");
+var allSpan = document.getElementById("allSpanRadio");
 var congButton = document.getElementById("optionCong");
 var styleButton = document.getElementById("optionStyle");
 var englishRadio = document.getElementById("englishRadio");
 var spanishRadio = document.getElementById("spanishRadio");
+var fvRadio = document.getElementById("fvRadio");
+var rhRadio = document.getElementById("rhRadio");
+var thRadio = document.getElementById("thRadio");
+var tvRadio = document.getElementById("tvRadio");
+var willRadio = document.getElementById("willRadio");
+var esmRadio = document.getElementById("esmRadio");
+var gsRadio = document.getElementById("gsRadio");
+var allEngDiv = document.getElementById("allEngDiv");
+var allSpanDiv = document.getElementById("allSpanDiv");
+var fvDiv = document.getElementById("fvDiv");
+var rhDiv = document.getElementById("rhDiv");
+var thDiv = document.getElementById("thDiv");
+var tvDiv = document.getElementById("tvDiv");
+var willDiv = document.getElementById("willDiv");
+var esmDiv = document.getElementById("esmDiv");
+var gsDiv = document.getElementById("gsDiv");
 
 var map = L.map('map').setView([40.258, -97.294], 4);
 
-var lastBackground = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 18
-}).addTo(map);
-// switch to Google street map style
-//switchBaseMap(18);
+// var lastBackground = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+//     maxZoom: 18
+// }).addTo(map);
+var lastBackground = L.gridLayer.googleMutant({ type: 'roadmap' }).addTo(map);
 
+var engCongLabels = new L.featureGroup();
+var spanCongLabels = new L.featureGroup();
+var engButtons = [allEng, fvRadio, rhRadio, thRadio, tvRadio, willRadio];
+var spanButtons = [allSpan, esmRadio, gsRadio];
+var engDivs = [allEngDiv, fvDiv, rhDiv, thDiv, tvDiv, willDiv];
+var spanDivs = [allSpanDiv, esmDiv, gsDiv]
 var englishLayers = [];
-mergeLayer = L.geoJson(newBoundaryData, {style: areaStyle, onEachFeature: function(feature, layer){
-    layer.bindTooltip(feature.properties.Congregati);
-}}).addTo(map);
+mergeLayer = L.geoJson(newBoundaryData, {style: areaStyle, onEachFeature: onAddEnglishCong}).addTo(map);
 englishLayers.push(mergeLayer);
 RHLayer = L.geoJson(newBoundaryData, { style: congStyle, filter: function (feature, layer) {
     var useIt = false;
@@ -82,13 +115,11 @@ TVLayer = L.geoJson(newBoundaryData, { style: congStyle, filter: function (featu
 englishLayers.push(TVLayer);
 
 var spanishLayers = [];
-spanLayer = L.geoJson(spanCongs, {style: areaStyle, onEachFeature: function(feature, layer){
-    layer.bindTooltip(feature.properties.Congregati);
-}});
+spanLayer = L.geoJson(spanCongs, {style: areaStyle, onEachFeature: onAddSpanishCong});
 spanishLayers.push(spanLayer);
 ESLayer = L.geoJson(spanCongs, { style: congStyle, filter: function (feature, layer) {
     var useIt = false;
-        if (feature.properties.CongName == "East Spanish") {
+        if (feature.properties.CongName == "East Spanish Murrieta") {
             useIt = true
         }
     return useIt;
@@ -103,6 +134,7 @@ GSLayer = L.geoJson(spanCongs, { style: congStyle, filter: function (feature, la
 } });
 spanishLayers.push(GSLayer);
 
+
 function areaStyle(feature) {
     var prop = feature.properties;
     var hex = congColors[prop.OBJECTID_1];
@@ -115,6 +147,21 @@ function areaStyle(feature) {
         fillColor: hex
     };
 
+}
+function onAddEnglishCong(feature, layer){
+    var prop = feature.properties;
+    //layer.bindTooltip(prop.Congregati);
+    var polygonCenter = engLabelData[prop.OBJECTID_1]
+    var myIcon = L.divIcon({className: 'congLabelMarker', html: prop.CongName}); 
+    L.marker(polygonCenter, {icon: myIcon}).addTo(engCongLabels);
+}
+
+function onAddSpanishCong(feature, layer){
+    var prop = feature.properties;
+    //layer.bindTooltip(prop.Congregati);
+    var polygonCenter = spanLabelData[prop.OBJECTID_1]
+    var myIcon = L.divIcon({className: 'congLabelMarker', html: prop.CongName}); 
+    L.marker(polygonCenter, {icon: myIcon}).addTo(spanCongLabels);
 }
 
 function congStyle(feature) {
@@ -130,9 +177,14 @@ function congStyle(feature) {
     };    
 }
 
-function switchEnglishCongs(layer) {
+function switchEnglishCongs(layer, index) {
     removeEnglishCongs();
     map.addLayer(layer);
+    if (layer == mergeLayer) {
+        map.addLayer(engCongLabels);
+    }
+    engDivs[index].classList.add('selectedCong');
+    engButtons[index].checked = true;
     map.flyToBounds(layer);
 }
 
@@ -141,12 +193,21 @@ function removeEnglishCongs () {
         if (map.hasLayer(englishLayers[i])) {
             map.removeLayer(englishLayers[i]);
         }
+        engDivs[i].classList.remove('selectedCong');
+    }
+    if (map.hasLayer(engCongLabels)){
+        map.removeLayer(engCongLabels);
     }
 }
 
-function switchSpanishCongs(layer) {
+function switchSpanishCongs(layer, index) {
     removeSpanishCongs();
     map.addLayer(layer);
+    if (layer == spanLayer) {
+        map.addLayer(spanCongLabels);
+    }
+    spanDivs[index].classList.add('selectedCong');
+    spanButtons[index].checked = true;
     map.flyToBounds(layer);
 }
 
@@ -155,6 +216,10 @@ function removeSpanishCongs () {
         if (map.hasLayer(spanishLayers[i])) {
             map.removeLayer(spanishLayers[i]);
         }
+        spanDivs[i].classList.remove('selectedCong');
+    }
+    if (map.hasLayer(spanCongLabels)){
+        map.removeLayer(spanCongLabels);
     }
 }
 
@@ -167,7 +232,10 @@ function switchLanguage(newLang) {
         removeSpanishCongs();
         removeEnglishCongs();
         map.addLayer(mergeLayer);
+        map.addLayer(engCongLabels);
+        engDivs[0].classList.add('selectedCong');
         allEng.checked = true;
+        englishRadio.checked = true;
         map.flyToBounds(mergeLayer);
     } else {
         engList.style.display = "none";
@@ -177,7 +245,10 @@ function switchLanguage(newLang) {
         removeEnglishCongs();
         removeSpanishCongs();
         map.addLayer(spanLayer);
+        map.addLayer(spanCongLabels);
+        spanDivs[0].classList.add('selectedCong');
         allSpan.checked = true;
+        spanishRadio.checked = true;
         map.flyToBounds(spanLayer);
     }
 }
@@ -260,6 +331,14 @@ function switchCurrentLanguage() {
     khMarker._tooltip.setContent(lang['kingdomHall']);
 }
 
+function getMouseLatLng(e) {
+	var cSpan = document.getElementById('coords');
+	if (cSpan) {
+		var valStr = (e.latlng.lat).toFixed(5) + ", " + (e.latlng.lng).toFixed(5) ;
+		cSpan.textContent = valStr;
+	}
+}
+
 // add scalebars
 L.control.scale({ position: "bottomleft" }).addTo(map);
 
@@ -281,9 +360,12 @@ bmBody.style.maxHeight = bmHeight + "px";
 setUpBasemapList();
 if (appLang == 'english') {
     map.fitBounds(mergeLayer.getBounds());
+    engCongLabels.addTo(map);
 } else {
     map.fitBounds(spanLayer.getBounds());
 }
+
+map.addEventListener('mousemove', getMouseLatLng);
 
 
 

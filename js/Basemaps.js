@@ -2,8 +2,12 @@
 var lastBackgroundIndex = -1;
 
 var backgroundMaps = [
-    // Esri
-    { name: "EsriWorldTopoMap", basemap: L.tileLayer.provider('Esri.WorldTopoMap'), title: "Esri World Topo Map", image: "Esri_World_Topo_Map.png" } // 0
+    { name: "GoogleRoad", basemap: L.gridLayer.googleMutant({ type: 'roadmap' }), title: "Google Roadmap", image: "Google_Road.png"}
+    ,{ name: "GoogleSatellite", basemap: L.gridLayer.googleMutant({ type: 'satellite' }), title: "Google Satellite", image: "Google_Aerial.png"}
+    ,{ name: "GoogleHybrid", basemap: L.gridLayer.googleMutant({ type: 'hybrid' }), title: "Google Hybrid", image: "Google_Hybrid.png"}
+    ,{ name: "GoogleTerrain", basemap: L.gridLayer.googleMutant({ type: 'terrain' }), title: "Google Terrain", image: "Google_Terrain.png"}
+   // Esri
+    ,{ name: "EsriWorldTopoMap", basemap: L.tileLayer.provider('Esri.WorldTopoMap'), title: "Esri World Topo Map", image: "Esri_World_Topo_Map.png" } // 0
     ,{ name: "EsriWorldStreetMap", basemap: L.tileLayer.provider('Esri.WorldStreetMap'), title: "Esri World Street Map", image: "Esri_World_Street_Map.png" } // 1
     ,{ name: "EsriGrayCanvasMap", basemap: L.tileLayer.provider('Esri.WorldGrayCanvas'), title: "Esri Gray Canvas Map", image: "Esri_Gray_Canvas.png" } // 2
     ,{ name: "EsriDarkGrayCanvasMap", basemap: L.tileLayer.provider('Esri.WorldDarkGrayCanvas'), title: "Esri Dark Gray Canvas Map", image: "Esri_Dark_Gray_Canvas.png" } // 2
@@ -24,14 +28,10 @@ var backgroundMaps = [
     ,{ name: "StamenWatercolor", basemap: L.tileLayer.provider('Stamen.Watercolor'), title: "Stamen Watercolor", image: "Stamen_Watercolor.png" } // 13
     ,{ name: "ThunderforestOpenCycleMap", basemap: L.tileLayer.provider('Thunderforest.OpenCycleMap'), title: "Thunderforest OpenCycle", image: "Thunderforest_OpenCycleMap.png" } // 14
     ,{ name: "ThunderforestTransport", basemap: L.tileLayer.provider('Thunderforest.Transport'), title: "Thunderforest Transport", image: "Thunderforest_Transport.png" } // 15
-    , { name: "ThunderforestLandscape", basemap: L.tileLayer.provider('Thunderforest.Landscape'), title: "Thunderforest Landscape", image: "Thunderforest_Landscape.png" } // 16
-    , { name: "ThunderforestOutdoors", basemap: L.tileLayer.provider('Thunderforest.Outdoors'), title: "Thunderforest Outdoors", image: "Thunderforest_Outdoors.png" } // 17
+    ,{ name: "ThunderforestLandscape", basemap: L.tileLayer.provider('Thunderforest.Landscape'), title: "Thunderforest Landscape", image: "Thunderforest_Landscape.png" } // 16
+    ,{ name: "ThunderforestOutdoors", basemap: L.tileLayer.provider('Thunderforest.Outdoors'), title: "Thunderforest Outdoors", image: "Thunderforest_Outdoors.png" } // 17
      //, { name: "", basemap: L.tileLayer.provider(''), title: "", image: ".png" }
      // google maps layers
-     ,{ name: "GoogleRoad", basemap: L.gridLayer.googleMutant({ type: 'roadmap' }), title: "Google Roadmap", image: "Google_Road.png"}
-     , { name: "GoogleSatellite", basemap: L.gridLayer.googleMutant({ type: 'satellite' }), title: "Google Satellite", image: "Google_Aerial.png"}
-     , { name: "GoogleHybrid", basemap: L.gridLayer.googleMutant({ type: 'hybrid' }), title: "Google Hybrid", image: "Google_Hybrid.png"}
-     , { name: "GoogleTerrain", basemap: L.gridLayer.googleMutant({ type: 'terrain' }), title: "Google Terrain", image: "Google_Terrain.png"}
 ];
 
 function setUpBasemapList() {
