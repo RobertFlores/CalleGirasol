@@ -119,7 +119,7 @@ spanLayer = L.geoJson(spanCongs, {style: areaStyle, onEachFeature: onAddSpanishC
 spanishLayers.push(spanLayer);
 ESLayer = L.geoJson(spanCongs, { style: congStyle, filter: function (feature, layer) {
     var useIt = false;
-        if (feature.properties.CongName == "East Spanish Murrieta") {
+        if (feature.properties.CongName == "East Murrieta Spanish") {
             useIt = true
         }
     return useIt;
