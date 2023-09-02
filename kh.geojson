@@ -1,0 +1,44 @@
+{
+    "type" : "FeatureCollection",
+	"name" : "Kingdom Hall",
+    "features" : [
+        {
+            "type" : "Feature",
+            "geometry" : {
+                "type" : "Point",
+                "coordinates" : [ -117.110, 33.541]
+            },
+            "properties" : {
+                "Name" : "Kingdom Hall of Jehovah's Witnesses",
+                "Address" : "31640 Calle Girasol, Temeculat, CA 92591",
+                "Phone" : "(951) 506-2887"
+            }
+        },
+        {
+            "type" : "Feature",
+            "geometry" : {
+                "type" : "Point",
+                "coordinates" : [ -117.11727, 33.49611]
+            },
+            "properties" : {
+                "Name" : "Kingdom Hall of Jehovah's Witnesses",
+                "Address" : "31141 Pauba Rd, Temecula, CA 92592",
+                "Phone" : "(951) 506-9963"
+            }
+        },
+        {
+            "type" : "Feature",
+            "geometry" : {
+                "type" : "Point",
+                "coordinates" : [ -117.22488, 33.56126]
+            },
+            "properties" : {
+                "Name" : "Kingdom Hall of Jehovah's Witnesses",
+                "Address" : "324295 Lenox Ln, Murrieta, CA 92562",
+                "Phone" : "(951) 677-0213"
+            }
+
+        }
+    ]
+
+}
