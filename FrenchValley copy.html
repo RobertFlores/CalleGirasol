@@ -507,16 +507,12 @@
                     type: "fields",
                     fieldInfos: [
                         {
-                            fieldName: "name",
+                            fieldName: "Territory",
                             label: "Territory"
                         },
                         {
-                            fieldName: "TerritoryType",
+                            fieldName: "Type",
                             label: "Type"
-                        },
-                        {
-                            fieldName: "TerritoryNotes",
-                            label: "Notes"
                         }
                     ]
                 }
@@ -577,10 +573,10 @@
         fvLayer.labelingInfo = [ congLabelClass ];
         // fvLayer.labelsVisble = false;
 
-        const territoryUrl = "french_valley.json";
+        const territoryUrl = "FrenchValleyTerritories.geojson";
         const territoryRenderer = {
             type: "unique-value",
-            field: "TerritoryType",
+            field: "Type",
             uniqueValueInfos: [
                 {value: "Business", symbol: {type: "simple-fill", color: [248,147,31,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
                 {value: "Rural", symbol: {type: "simple-fill",color: [0,167,108,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
@@ -599,7 +595,7 @@
         });
         terrLayer = territoryLayer;
         const terrLabelClass = new LabelClass({
-            labelExpressionInfo: { expression: "$feature.TerritoryTypeCode + '-' + $feature.TerritoryNumber" },
+            labelExpressionInfo: { expression: "$feature.Territory" },
             symbol: {
                 type: "text",  // autocasts as new TextSymbol()
                 color: [0,0,0, 128],  // white
