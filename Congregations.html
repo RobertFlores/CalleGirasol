@@ -415,7 +415,9 @@
                 layers[i].visible = false;                
             }
             for(i =1; i < territoryLayers.length; i++) {
-                territoryLayers[i].visible = false;
+                if (territoryLayers[i] != null) {
+                    territoryLayers[i].visible = false;
+                }
             }
             layers[index].visible = true;
             activeLayer = index;
@@ -623,10 +625,21 @@
             uniqueValueInfos: [
                 {value: "Business", symbol: {type: "simple-fill", color: [248,147,31,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
                 {value: "Rural", symbol: {type: "simple-fill",color: [0,167,108,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
-                // {value: "Ptolemy I", symbol: {type: "simple-fill",color: [155,116,179,1]}},
                 {value: "Residential", symbol: {type: "simple-fill",color: [244,114,101,0.85], outline: {color: [0,0,0,1],width: "3px"}}}
             ]
         };
+        const territoryRenderer2 = {
+            type: "unique-value",
+            field: "TerritoryType",
+            uniqueValueInfos: [
+                {value: "Business", symbol: {type: "simple-fill", color: [248,147,31,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
+                {value: "Rural", symbol: {type: "simple-fill",color: [0,167,108,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Apartments", symbol: {type: "simple-fill",color: [60,120,216,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Residential", symbol: {type: "simple-fill",color: [244,114,101,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Letter Writing", symbol: {type: "simple-fill",color: [250,209,101,0.85], outline: {color: [0,0,0,1],width: "3px"}}}
+            ]
+        };
+
         const fvTerrLayer = new GeoJSONLayer({
             url: fvTerrUrl,
             copyright: "",
@@ -689,6 +702,7 @@
         });
         temValley = tvLayer;
         layers.push(tvLayer);
+
         // extents.push(new Extent(-117.17476,33.47955,-116.88252,33.59559, new SpatialReference({ wkid:4326 })));
         extents.push(new Extent(-117.20351,33.44307,-116.85074,33.62086, new SpatialReference({ wkid:4326 })));
 
@@ -705,10 +719,30 @@
         });
         willows = willLayer;
         layers.push(willLayer);
+
         // willLayer.labelingInfo = [ congLabelClass];
         // extents.push(new Extent(-117.19877,33.48413,-116.96872,33.65994, new SpatialReference({ wkid:4326 })));
         extents.push(new Extent(-117.22449,33.46376,-116.92891,33.68046, new SpatialReference({ wkid:4326 })));
 
+        tvTerrUrl = "temecula_valley_congregation.json";
+        const tvTerrLayer = new GeoJSONLayer({
+            url: tvTerrUrl,
+            copyright: "",
+            renderer: territoryRenderer2,
+            title: "Temecula Valley Territories",
+            popupTemplate: terrTemplate,
+            opacity: 0.25,
+            visible: false
+        });
+        TVterrLayer = tvTerrLayer;
+
+        TVterrLayer.labelingInfo = terrLabelClass;
+
+        // territory layers
+        territoryLayers.push(null); // Rolling Hills
+        territoryLayers.push(null); // Temecula Hills
+        territoryLayers.push(tvTerrLayer); // Temecula Valley
+        territoryLayers.push(null); // Willows
 
 
 
@@ -929,6 +963,7 @@
                     tvLayer,
                     willLayer,        
                     terrLayer,
+                    tvTerrLayer,
                     khallLayer,
                     graphicsLayer
                 ]
