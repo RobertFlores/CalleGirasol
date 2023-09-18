@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      French Valley Congregation
+    </title>
+
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/esri/themes/light/main.css"
+    />
+
+
+    <script src="https://js.arcgis.com/4.23/"></script>
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        #mainBox {
+            width: calc(100% - 252px);
+            height: 100%;
+            position: absolute;
+            left: 0px;
+            top: 0;
+            border: 2px solid black;
+        }
+        #leftTopPannel {
+            position:absolute;
+            left: 0;
+            top: 0;
+            width: 304px;
+            height: 180px;
+            background-image: url(images/WorldPowers-top.png);
+        }
+        #leftBottomPannel {
+            position:absolute;
+            left: 0;
+            top: 180px;
+            width: 365px;
+            height: 750px;
+            background-image: url(images/WorldPowers-bottom.png);
+        }
+        #babylonClick {
+            position: absolute;
+            left: 5px;
+            top: 200px;
+            width: 120px;
+            height: 70px;        
+            }
+        #medoClick {
+            position: absolute;
+            left: 5px;
+            top: 305px;
+            width: 120px;
+            height: 70px;
+        }
+        #greeceClick {
+            position: absolute;
+            left: 5px;
+            top: 420px;
+            width: 120px;
+            height: 80px;
+        }
+        #romeClick {
+            position: absolute;
+            left: 5px;
+            top: 540px;
+            width: 115px;
+            height: 80px;
+        }
+        #angloAmerClick {
+            position: absolute;
+            left: 5px;
+            top: 670px;
+            width: 120px;
+            height: 43px;
+        }
+        .buttonColors {
+          background-color: rgba(255,255,255,0.1);
+          cursor: pointer;
+          border: 3px solid transparent;
+          background-image: none;
+
+        }
+        #showGallery {
+            color: black; 
+            background-color: white; 
+            border: 1px solid grey; 
+            position: absolute; 
+            right: 5px; 
+            top: 5px;
+            z-index: 1;
+            width: 100px;
+            cursor: pointer;
+        }
+        #galleryTitle {
+            font-weight: bold;
+            float: left;
+            margin-left: 15px;
+        }
+        #galleryList {
+            color: black; 
+            background-color: white; 
+            position: absolute; 
+            top: 200px;
+            right: 0; 
+            bottom: 5px;
+            width: 248px;
+            text-align: center;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            /* max-height: calc(100% - 165px); */
+            overflow:auto;
+        }        
+        #galleryList ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            margin-top: 2px;
+            display: inline-block;
+
+        }
+        #galleryList ul li{
+            cursor: pointer;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            display: inline-flex;
+        }
+        #showData {
+            color: black; 
+            background-color: white; 
+            border: 1px solid grey; 
+            position: absolute; 
+            right: 5px; 
+            top: 25px;
+
+            width: 100px;
+            cursor: pointer;
+        }
+        #dataList {
+            color: black; 
+            background-color: white; 
+            position: absolute; 
+            right: 0; 
+            top: 5px;
+            width: 248px;
+            border-bottom: 1px solid black;
+            padding-bottom: 10px;
+
+        }
+        #dataListTitle {
+            font-weight: bold;
+
+            margin-left: 15px;
+        }
+        #dataList ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            margin-top: 2px;
+        }
+        #dataList ul li {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            padding-left: 20px;
+        }
+        #infoDiv {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+        }
+
+        #infoDiv input {
+            border: none;
+            box-shadow: none;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            vertical-align: middle;
+            text-align: center;
+            border-radius: 20px;
+
+        }
+
+        .smallTitle {
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .largeTitle {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .scriptureHeading {
+            color: blue;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .infoContent {
+            max-width: 550px;
+        }
+        #magGlass {
+            position: absolute;
+            top: 124px;
+            left: 15px;
+            width: 32px;
+            height: 32px;
+            border: 1px solid lightgrey;
+            background-color: white;
+            background-image: url(images/white-magnifying-glass.png);
+            background-size: 75%;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            display: block;
+
+        }
+        #drawIcon {
+            position: absolute;
+            top: 90px;
+            left: 15px;
+            width: 32px;
+            height: 32px;
+            border: 1px solid lightgrey;
+            background-color: white;
+            background-image: url(images/drawIcon.png);
+            background-size: 75%;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            display: block;
+
+        }
+        #legendButton {
+            position: absolute;
+            /* top: 124px; */
+            top: 90px;
+            left: 15px;
+            width: 32px;
+            height: 32px;
+            border: 1px solid lightgrey;
+            background-color: white;
+            background-image: url(images/list.jpeg);
+            background-size: 75%;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            display: block;
+        }
+        #collapseRight {
+            position: absolute;
+            top: 0;
+            right: 0;
+            float: right;
+            width: 16px;
+            height: 16px;
+            border: 1px solid lightgrey;
+            background-color: white;
+            background-image: url(images/angle-double-right_1.png);
+            background-size: 75%;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+
+        }
+
+    </style>
+
+    <script>
+        var layers = [];
+        var labels = [];
+        var buttons = [];
+        var territoryLayers = [];
+        var extents = [];
+        var imageHighlight = [];
+        var theView;
+        var basemaps;
+        var mapGalleryOn = false;
+        var theMap;
+        var theConfig;
+        var gallery;
+        var features;
+        var watercolorLayer;
+        var watercolor2Layer;
+        var terrainLayer;
+        var reliefLayer
+        var dataListOn = false;
+        var infoContent = [];
+        var scriptureText = [];
+        var magGlass;
+        var magOn = false;
+        var drawTool;
+        var drawOn = false;
+        var theSketch;
+        var khLayer;
+        var legOn = true;
+        var rightVis = true;
+        var activeLayer = 0;
+        
+
+        function changeBasemap (name, index) {
+            switch (name) {
+                case "watercolor" :
+                    name = watercolorLayer;
+                    break;
+                case "watercolor2": 
+                    name = watercolor2Layer;
+                    break;
+                case "terrain": 
+                    name = terrainLayer;
+                    break;
+                case "relief":
+                    name = reliefLayer;
+                    break;
+                case "openCycleMap":
+                    name = openCycleLayer;
+                    break;
+                case "landscape": 
+                    name = landscapeLayer;
+                    break;
+                case "neighbourhood": 
+                    name = neighborhoodLayer;
+                    break;
+                case "usgsImageryMap":
+                    name = usgsImageryLayer;
+                    break;
+                case "usgsTopoMap":
+                    name = usgsTopoLayer;
+                    break;
+                case "openStreetMapFance":
+                    name = openStreetMapFranceLayer;
+                    break;
+            }
+            theMap.basemap = name;
+            var list = galleryUL.children;
+            for (i=0;i<list.length;i++) {
+                var image = list[i].children[0];
+                if (i == index) {
+                    image.style.borderColor = "#ff0099";
+                } else {
+                    image.style.borderColor = "#888888";
+                }
+            }
+        }
+
+        function toggleFV (e) {
+            var checkbox = e.target;
+            frenchValley.visible = checkbox.checked;
+        }
+
+        function toggleOtherCongs (e) {
+            var checkbox = e.target;
+            otherCongs.visible = checkbox.checked;
+        }
+
+
+        function toggleLayerPubs(e) {
+            var checkbox = e.target;
+            fvPubs.visible = checkbox.checked;
+        }
+
+        function toggleTerritories(e) {
+            var checkbox = e.target;
+            terrLayer.visible = checkbox.checked;
+        }
+        function toggleKH(e) {
+            var checkbox = e.target;
+            khLayer.visible = checkbox.checked;
+        }
+
+
+        function toggleMagnifier(e) {
+            magOn = !magOn;
+            theConfig.mapView.magnifier.visible = magOn;
+
+        }
+
+        function toggleLegend(e) {
+            legOn = !legOn;
+            theLegend.visible = legOn;
+
+        }
+
+        function toggleSketch(e) {
+            drawOn = !drawOn;
+            theSketch.visible = drawOn;
+        }
+
+        function toggleRightSide(e) {
+            rightVis = !rightVis;
+            rightPanel.style.display = rightVis ? "block" : "none";
+            mainBox.style.width = rightVis ? "calc(100% - 252px)" : "100%";
+
+            var rightUrl = "url(" + originalPath + "/images/angle-double-right_1.png)";
+            var leftUrl = "url(" + originalPath + "/images/angle-double-left_1.png)";
+            collapseRight.style.backgroundImage = rightVis ? rightUrl : leftUrl;
+        }
+
+        function switchView(index) {
+            for (i = 0; i< layers.length; i++) {
+                layers[i].visible = false;                
+            }
+            for(i =1; i < territoryLayers.length; i++) {
+                territoryLayers[i].visible = false;
+            }
+            layers[index].visible = true;
+            activeLayer = index;
+            if (territoryLayers[index] != null) {
+                territoryLayers[index].visible = true;
+            }
+            // theConfig.activeView.extent = layers[index].fullExtent;
+            theConfig.activeView.extent = extents[index];
+
+        }
+
+
+      require(["esri/Map", 
+        "esri/layers/GeoJSONLayer", 
+        "esri/views/SceneView", 
+        "esri/views/MapView",
+        "esri/views/ui/UI", 
+        "esri/config",
+        "esri/Basemap",
+        "esri/layers/WebTileLayer",
+        "esri/layers/VectorTileLayer",
+        "esri/layers/TileLayer",        
+        "esri/widgets/Sketch",
+        "esri/views/Magnifier",
+        "esri/widgets/Legend",
+        "esri/layers/GraphicsLayer",
+        "esri/symbols/PictureMarkerSymbol",
+        "esri/layers/support/LabelClass",
+        "esri/Graphic",
+        "esri/geometry/Extent",
+        "esri/geometry/SpatialReference"
+
+        ], 
+        (Map, GeoJSONLayer, SceneView, MapView, UI, esriConfig, Basemap, WebTileLayer, VectorTileLayer, TileLayer, Sketch, Magnifier, Legend, GraphicsLayer, PictureMarkerSymbol, LabelClass, Graphic, Extent, SpatialReference) => {
+        
+        const puTemplate = {
+          title: "{Name}",
+          content: [
+                {
+                    type: "fields",
+                    fieldInfos: [
+                    {
+                            fieldName: "FamilyName",
+                            label: "Family Name"
+                        },
+                        {
+                            fieldName: "Address",
+                            label: "Address"
+                        },
+                        {
+                            fieldName: "Names",
+                            label: "Persons"
+                        },
+                        {
+                            fieldName: "Phone",
+                            label: "Phone"
+                        },
+                        {
+                            fieldName: "Email",
+                            label: "Email"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const congTemplate = {
+            title: "{Name}",
+            content: [
+                {
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            fieldName: "FullName",
+                            label: "Full Name"
+                        },
+                        {
+                            fieldName: "CongregationNumber",
+                            label: "Number"
+                        },
+                        {
+                            fieldName: "Language",
+                            label: "Language"
+                        }
+                    ]
+                }
+            ]
+        }
+
+        const terrTemplate = {
+            title: "French Valley Territory",
+            content: [
+                {
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            fieldName: "name",
+                            label: "Territory"
+                        },
+                        {
+                            fieldName: "TerritoryType",
+                            label: "Type"
+                        },
+                        {
+                            fieldName: "TerritoryNotes",
+                            label: "Notes"
+                        }
+                    ]
+                }
+            ]
+        }
+
+        const khTemplate = {
+            title: "Kingdom Hall of Jehovah's Witnesses",
+            content: [
+                {
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            fieldName: "Address",
+                            label: "Address"
+                        }
+                    ]
+                }
+            ]
+        }
+
+        // Congregation layers
+
+        const congLabelClass = new LabelClass({
+            labelExpressionInfo: { expression: "$feature.Name" },
+            symbol: {
+                type: "text",  // autocasts as new TextSymbol()
+                color: [255, 255, 255, 128],  // white
+                font: { family: "Arial Unicode MS", size: 8, weight: "bold" },
+                haloColor: [128,0,0, 128],  // black
+                haloSize: 1
+            }
+        });
+
+        const congsUrl = "EnglishCongregations.geojson";
+        const congsRenderer = {
+            type: "simple",
+
+            symbol: {
+                type: "simple-fill",
+                color: [255,255,255,0],
+                // color: "lightblue",
+                outline: {
+                  color: [64,64,255, 1],
+                  width: "4px"
+                }                
+            }
+        };
+        const congsLayer = new GeoJSONLayer({
+            url: congsUrl,
+            copyright: "",
+            title: "Other Congregations",
+            renderer: congsRenderer,
+            popupTemplate: congTemplate,
+            opacity: 0.5,
+            visible: true
+        });
+        otherCongs = congsLayer;
+        congsLayer.labelingInfo = [ congLabelClass ];
+        congsLayer.labelsVisble = true;
+        layers.push(congsLayer);
+        territoryLayers[0] = null;
+        extents.push(new Extent(-117.22908,33.17988,-116.4438,33.67024, new SpatialReference({ wkid:4326 })));
+
+
+
+        const fvUrl = "FrenchValley.geojson";
+        const fvRenderer = {
+            type: "simple",
+
+            symbol: {
+                type: "simple-fill",
+                color: [255,255,255,0.0],
+                outline: {
+                  color: [255,0,0, 0.5],
+                  width: "10px"
+                }                
+            }
+        };
+        const fvLayer = new GeoJSONLayer({
+            url: fvUrl,
+            copyright: "",
+            renderer: fvRenderer,
+            title: "French Valley Boundary",
+            // popupTemplate: congTemplate,
+            opacity: 0.5,
+            visible: false
+        });
+        frenchValley = fvLayer;
+        layers.push(fvLayer);
+        fvLayer.labelingInfo = [ congLabelClass ];
+        // fvLayer.labelsVisble = false;
+        extents.push(new Extent(-117.15024,33.54703,-117.06901,33.64776, new SpatialReference({ wkid:4326 })));
+
+        const fvTerrUrl = "french_valley.json";
+        const territoryRenderer = {
+            type: "unique-value",
+            field: "TerritoryType",
+            uniqueValueInfos: [
+                {value: "Business", symbol: {type: "simple-fill", color: [248,147,31,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
+                {value: "Rural", symbol: {type: "simple-fill",color: [0,167,108,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                // {value: "Ptolemy I", symbol: {type: "simple-fill",color: [155,116,179,1]}},
+                {value: "Residential", symbol: {type: "simple-fill",color: [244,114,101,0.85], outline: {color: [0,0,0,1],width: "3px"}}}
+            ]
+        };
+        const fvTerrLayer = new GeoJSONLayer({
+            url: fvTerrUrl,
+            copyright: "",
+            renderer: territoryRenderer,
+            title: "French Valley Territories",
+            popupTemplate: terrTemplate,
+            opacity: 0.25,
+            visible: false
+        });
+        terrLayer = fvTerrLayer;
+        const terrLabelClass = new LabelClass({
+            labelExpressionInfo: { expression: "$feature.TerritoryTypeCode + '-' + $feature.TerritoryNumber" },
+            symbol: {
+                type: "text",  // autocasts as new TextSymbol()
+                color: [0,0,0, 128],  // white
+                font: { family: "Arial Unicode MS", size: 8, weight: "bold" },
+                haloColor: [255, 255, 255, 128],  // black
+                haloSize: 1
+            }
+        });
+        terrLayer.labelingInfo = terrLabelClass;
+        territoryLayers.push(fvTerrLayer);
+
+        const rhUrl = "RollingHills.json";
+        const rhLayer = new GeoJSONLayer({
+            url: rhUrl,
+            copyright: "",
+            renderer: fvRenderer,
+            title: "Rolling Hills Boundary",
+            opacity: 0.5,
+            visible: false
+        });
+        rollingHills = rhLayer;
+        layers.push(rhLayer);
+        extents.push(new Extent(-117.18623,33.54571,-117.10462,33.64970, new SpatialReference({ wkid:4326 })));
+
+
+        const thUrl = "TemeculaHills.json";
+        const thLayer = new GeoJSONLayer({
+            url: thUrl,
+            copyright: "",
+            renderer: fvRenderer,
+            title: "Temecula Hills Boundary",
+            opacity: 0.5,
+            visible: false
+        });
+        temHills = thLayer;
+        layers.push(thLayer);
+        extents.push(new Extent(-117.22908,33.17988,-116.4438,33.67024, new SpatialReference({ wkid:4326 })));
+
+
+        const tvUrl = "TemeculaValley.json";
+        const tvLayer = new GeoJSONLayer({
+            url: tvUrl,
+            copyright: "",
+            renderer: fvRenderer,
+            title: "Temecula Valley Boundary",
+            opacity: 0.5,
+            visible: false
+        });
+        temValley = tvLayer;
+        layers.push(tvLayer);
+        // extents.push(new Extent(-117.17476,33.47955,-116.88252,33.59559, new SpatialReference({ wkid:4326 })));
+        extents.push(new Extent(-117.20351,33.44307,-116.85074,33.62086, new SpatialReference({ wkid:4326 })));
+
+
+        const willUrl = "Willows.json";
+        const willLayer = new GeoJSONLayer({
+            url: willUrl,
+            copyright: "",
+            renderer: fvRenderer,
+            title: "Willows Boundary",
+            // popupTemplate: congTemplate,
+            opacity: 0.5,
+            visible: false
+        });
+        willows = willLayer;
+        layers.push(willLayer);
+        // willLayer.labelingInfo = [ congLabelClass];
+        // extents.push(new Extent(-117.19877,33.48413,-116.96872,33.65994, new SpatialReference({ wkid:4326 })));
+        extents.push(new Extent(-117.22449,33.46376,-116.92891,33.68046, new SpatialReference({ wkid:4326 })));
+
+
+
+
+
+        // locRef = window.location.href;
+        // var lastIndex = locRef.lastIndexOf("/");
+        // originalPath = locRef.substring(0,lastIndex)
+
+
+        var urlPath = originalPath + "/images/WT_1.png";
+        
+        var pms = new PictureMarkerSymbol({
+            url: urlPath,        //url: 'https://js.arcgis.com/3.28/esri/dijit/Search/images/search-pointer.png', //this works
+            width: "24px",
+            height: "22px"
+        });
+        const khRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: pms
+
+        };
+        var khUrl = "kh.geojson";
+        const khallLayer = new GeoJSONLayer({
+            url: khUrl,
+            copyright: "",
+            title: "Kingdom Hall",
+            renderer: khRenderer,
+            opacity: 1,
+            popupTemplate: khTemplate,
+            visible: true
+        });
+        khLayer = khallLayer;
+
+
+        const watercolorBaseLayer = new WebTileLayer({
+            urlTemplate: "https://stamen-tiles-{subDomain}.a.ssl.fastly.net/watercolor/{level}/{col}/{row}.jpg",
+            subDomains: ["a", "b", "c", "d"],
+            copyright:
+                'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, ' +
+                'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ' +
+                'Data by <a href="http://openstreetmap.org/">OpenStreetMap</a>, ' +
+                'under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
+        });
+
+            // Create a Basemap with the WebTileLayer. The thumbnailUrl will be used for
+            // the image in the BasemapToggle widget.
+            const watercolor = new Basemap({
+            baseLayers: [watercolorBaseLayer],
+            title: "Watercolor",
+            id: "watercolor",
+            thumbnailUrl: "../../map_images/watercolor.png"
+        });
+        watercolorLayer = watercolor;
+
+        const watercolorLayer2 = new VectorTileLayer({
+            portalItem: {
+                id: "fdf540eef40344b79ead3c0c49be76a9"
+            },
+            opacity: 1
+        });
+        const watercolor2 = new Basemap({
+            baseLayers: [watercolorLayer2],
+            title: "Watercolor 2",
+            id: "watercolor2",
+            thumbnailUrl: "../../map_images/watercolor2.png"
+        });
+        watercolor2Layer = watercolor2;
+
+        const terrainBaseLayer = new WebTileLayer({
+            urlTemplate: "https://stamen-tiles-{subDomain}.a.ssl.fastly.net/terrain-background/{level}/{col}/{row}.png",
+            subDomains: ["a", "b", "c", "d"],
+            copyright:
+                'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, ' +
+                'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ' +
+                'Data by <a href="http://openstreetmap.org/">OpenStreetMap</a>, ' +
+                'under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
+        });
+
+            // Create a Basemap with the WebTileLayer. The thumbnailUrl will be used for
+            // the image in the BasemapToggle widget.
+            const stamenTerrain = new Basemap({
+            baseLayers: [terrainBaseLayer],
+            title: "stamenTerrain",
+            id: "stamenTerrain",
+            thumbnailUrl: "https://stamen-tiles.a.ssl.fastly.net/terrain-background/10/177/409.png"
+        });
+        terrainLayer = stamenTerrain;
+
+        const reliefBase = new Basemap({
+          baseLayers: [
+            new TileLayer({
+              url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/terrain_with_heavy_bathymetry/MapServer",
+              copyright:
+                'Bathymetry, topography and satellite imagery from <a href="https://visibleearth.nasa.gov/view_cat.php?categoryID=1484" target="_blank">NASA Visible Earth</a> | <a href="http://www.aag.org/global_ecosystems" target="_blank">World Ecological Land Units, AAG</a> | Oceans, glaciers and water bodies from <a href="https://www.naturalearthdata.com/" target="_blank">Natural Earth</a>'
+            })
+          ]
+        });
+        reliefLayer = reliefBase;
+
+        const cycleMapBaseLayer = new WebTileLayer({
+            urlTemplate: "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=b0c68cba245842aaa4cb6064900cea6a",
+            subDomains: ["a", "b", "c", "d"],
+            apiKey: 'b0c68cba245842aaa4cb6064900cea6a',
+            copyright:
+                'Map tiles by <a href="thunderforest.com/">OpenCycleMap</a>, ' 
+        });
+
+        const openCycleMap = new Basemap({
+            baseLayers: [cycleMapBaseLayer],
+            title: "cycleOpenMap",
+            id: "cycleOpenMap"
+        });
+        openCycleLayer = openCycleMap;
+
+        const neighborhoodBaseLayer = new WebTileLayer({
+            urlTemplate: "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=b0c68cba245842aaa4cb6064900cea6a",
+            subDomains: ["a", "b", "c", "d"],
+            apiKey: 'b0c68cba245842aaa4cb6064900cea6a',
+            copyright:
+                'Map tiles by <a href="thunderforest.com/">Thunderforest Neighbourhood Map</a>, ' 
+        });
+
+        const neighborhoodMap = new Basemap({
+            baseLayers: [neighborhoodBaseLayer],
+            title: "neighborhoodMap",
+            id: "neighborhoodMap"
+        });
+        neighborhoodLayer = neighborhoodMap;
+
+        const landscapeBaseLayer = new WebTileLayer({
+            urlTemplate: "https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=b0c68cba245842aaa4cb6064900cea6a",
+            subDomains: ["a", "b", "c", "d"],
+            apiKey: 'b0c68cba245842aaa4cb6064900cea6a',
+            copyright:
+                'Map tiles by <a href="thunderforest.com/">Thunderforest Landscape Map</a>, ' 
+        });
+
+        const landscapeMap = new Basemap({
+            baseLayers: [landscapeBaseLayer],
+            title: "landscapeMap",
+            id: "landscapeMap"
+        });
+        landscapeLayer = landscapeMap;
+
+        const openStreetMapFranceBase = new WebTileLayer({
+            urlTemplate: "https://tile.openstreetmap.de/{z}/{x}/{y}.png",
+            subDomains: ["a", "b", "c", "d"],
+
+            copyright: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors">OpenStreetMap</a> contributors'
+        });
+
+        const openStreetFranceMap = new Basemap({
+            baseLayers: [openStreetMapFranceBase],
+            title: "openStreetMapFrance",
+            id: "openStreetMapFrance"
+        });
+        openStreetMapFranceLayer = openStreetFranceMap;
+
+        const openTopoBaseLayer = new WebTileLayer({
+            urlTemplate: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+            subDomains: ["a", "b", "c", "d"],
+            copyright: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+        });
+        const openTopoMap = new Basemap ({
+            baseLayers: [openTopoBaseLayer],
+            title: "openTopoMap",
+            id: "openTopoMap"
+        });
+        openTopoMapLayer = openTopoMap;
+
+        const usgsImageryBaseLayer = new WebTileLayer({
+            urlTemplate: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}',
+            subDomains: ["a", "b", "c", "d"],
+            copyright: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+        });
+        const usgsImageryMap = new Basemap ({
+            baseLayers: [usgsImageryBaseLayer],
+            title: "usgsImageryMap",
+            id: "usgsImageryMap"
+        });
+        usgsImageryLayer = usgsImageryMap;
+
+        const usgsTopoyBaseLayer = new WebTileLayer({
+            urlTemplate: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
+            subDomains: ["a", "b", "c", "d"],
+            copyright: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+        });
+        const usgsTopoMap = new Basemap ({
+            baseLayers: [usgsTopoyBaseLayer],
+            title: "usgsTopoMap",
+            id: "usgsTopoMap"
+        });
+        usgsTopoLayer = usgsTopoMap;
+
+
+        esriConfig.apiKey = "AAPKe5fcea6dfd22406bb18190ba0b202ce8GojQ3I4PUpCZPEtliruqUxWVSBBCUeuCTlnUv8td5pAhtznoxe5gQckABM6xac_q";
+
+        var swapButton = document.getElementById("switchButton");
+
+        var appConfig = {
+            mapView: null,
+            sceneView: null,
+            activeView: null,
+            container: "viewDiv" // use same container for views
+        };
+        theConfig = appConfig;
+        const graphicsLayer = new GraphicsLayer();
+        // const khLayer = new GraphicsLayer();
+        
+        var map = new Map({
+            basemap: 'osm-standard-relief',
+            ground: "world-elevation",
+            layers: [
+                    congsLayer,
+                    fvLayer,
+                    rhLayer,
+                    thLayer,
+                    tvLayer,
+                    willLayer,        
+                    terrLayer,
+                    khallLayer,
+                    graphicsLayer
+                ]
+        });
+        theMap = map;
+
+
+        var initialViewParams = {
+            map: map,
+            zoom: 11,
+            center: [-116.85116, 33.42457],
+            container: appConfig.container
+        };
+
+        // create 2D view and and set active
+        appConfig.mapView = createView(initialViewParams, "2d");
+        appConfig.activeView = appConfig.mapView;
+
+        // add sketch - 2D only here 
+        appConfig.mapView.when(() => {
+            const sketch = new Sketch({
+                layer: graphicsLayer,
+                view: appConfig.mapView,
+                // graphic will be selected as soon as it is created
+                 availableCreateTools: ["circle", "rectangle", "polygon"],
+                 defaultCreateOptions: "freehand",
+                creationMode: "update"
+            });
+            theSketch = sketch;
+            // const offset = appConfig.mapView.magnifier.size / 2;
+            // appConfig.mapView.magnifier.visible = false;
+            // appConfig.mapView.magnifier.offset = { x: 75, y: 75};
+            // appConfig.mapView.magnifier.factor = 2;
+            // appConfig.mapView.magnifier.size = 200;
+
+
+            // appConfig.mapView.on("pointer-move", function (event) {
+            //     appConfig.mapView.magnifier.position = {x: event.x, y: event.y};
+            // });
+
+
+            appConfig.mapView.ui.add(sketch, "top-right");
+            sketch.visible = false;
+            sketch.visibleElements = {
+                createTools: {
+                    point: false
+                },
+                selectionTools:{
+                    "lasso-selection": false
+                },
+                settingsMenu: false
+            }        
+        });
+
+        // create 3D view, won't initialize until container is set
+        initialViewParams.container = null;
+        appConfig.sceneView = createView(initialViewParams, "3d");
+
+        // swap the view between 2D and 3D each time the button is clicked
+        swapButton.addEventListener("click", function() {
+        swapView();
+        });
+
+
+        var coordsWidget = document.createElement("div");
+        coordsWidget.id = "coordsWidget";
+        coordsWidget.className = "esri-widget esri-component";
+        coordsWidget.style.padding = "2px 5px";
+        coordsWidget.style.margin = "0 0 -12px 0";
+        coordsWidget.style.opacity = 0.8;
+        coordsWidget.style.fontSize = "12px";
+
+        appConfig.mapView.ui.add(coordsWidget, "bottom-right");
+
+        theLegend = new Legend({
+            view: appConfig.mapView
+          });
+
+        appConfig.mapView.ui.add(theLegend, "bottom-left");
+
+
+
+        // Swaps the view from 2D to 3D and vice versa
+        function swapView() {
+            var is3D = appConfig.activeView.type === "3d";
+            const activeViewpoint = appConfig.activeView.viewpoint.clone();
+            
+            // remove the reference to the container for the previous view
+            appConfig.activeView.container = null;
+
+            if (is3D) {
+                // if the input view is a SceneView, set the viewpoint on the
+                // mapView instance. Set the container on the mapView and flag
+                // it as the active view
+                appConfig.mapView.viewpoint = activeViewpoint;
+                appConfig.mapView.container = appConfig.container;
+                appConfig.activeView = appConfig.mapView;
+                switchButton.value = "3D";
+                legendButton.style.display = "block";
+                drawTool.style.display = "block";
+
+          } else {
+                appConfig.sceneView.viewpoint = activeViewpoint;
+                appConfig.sceneView.container = appConfig.container;
+                appConfig.activeView = appConfig.sceneView;
+                switchButton.value = "2D";
+                legendButton.style.display = "none";
+                drawTool.style.display = "none";
+
+          }
+        }
+
+        // convenience function for creating a 2D or 3D view
+        function createView(params, type) {
+            var view;
+            var is2D = type === "2d";
+            if (is2D) {
+                view = new MapView(params);
+                return view;
+            } else {
+                view = new SceneView(params);
+            }
+
+            return view;
+        }
+
+
+      function showCoordinates(pt) {
+        var coords =
+            "Lat/Lon: " +
+            pt.latitude.toFixed(5) +
+            ", " +
+            pt.longitude.toFixed(5) +
+            "  |  Scale: 1:" +
+            Math.round(appConfig.mapView.scale * 1) / 1 +
+            "  |  Zoom: " +
+            appConfig.mapView.zoom;
+            coordsWidget.innerHTML = coords;
+        }
+
+
+
+        appConfig.mapView.on("pointer-move", function (evt) {
+            showCoordinates(appConfig.mapView.toMap({ x: evt.x, y: evt.y }));
+        });
+
+        
+
+      });
+
+
+     </script>
+
+
+  </head>
+
+  <body>
+    <div id="mainBox" >
+        <div id="viewDiv"></div>
+        <div id="collapseRight" onclick="toggleRightSide()" title="Show/Hide Panel"></div>
+    </div>
+    <div id="rightPanel">
+        <div id="galleryList" >
+            <div id="galleryTitle">Map Style</div>
+            <ul id="galleryUL">
+                <li onclick="changeBasemap('satellite',0)" title="Imagery">
+                    <img alt="Imagery" class="esri-basemap-gallery__item-thumbnail" src="https://www.arcgis.com/sharing/rest/content/items/86de95d4e0244cba80f0fa2c9403a7b2/info/thumbnail/thumbnail1591224931210.jpeg?f=json">
+                </li>
+                <li onclick="changeBasemap('usgsImageryMap',1)" title="USGS USImagery">
+                    <img alt="USGS USImagery" class="esri-basemap-gallery__item-thumbnail" src="images/usgsImagery.jpg">
+                </li>
+                <li onclick="changeBasemap('watercolor',3)" title="Watercolor">
+                    <img alt="" class="esri-basemap-gallery__item-thumbnail" src="images/watercolor.png">
+                </li>
+                <li onclick="changeBasemap('watercolor2',3)" title="Watercolor 2">
+                    <img alt="" class="esri-basemap-gallery__item-thumbnail" src="images/watercolor2.png">
+                </li>
+                <!-- <li onclick="changeBasemap('openTopoMap',3)" title="OpenTopoMap">
+                    <img alt="" class="esri-basemap-gallery__item-thumbnail" src="images/openTopoMap.png"> 
+                </li> -->
+                <li onclick="changeBasemap('arcgis-streets-night',4)" title="Dark Gray Map">
+                    <img alt="" class="esri-basemap-gallery__item-thumbnail" src="https://www.arcgis.com/sharing/rest/content/items/1c8ddaba2ee9498cb0025554351e5475/info/thumbnail/streetnight_thumb_b2.jpg?f=json">
+                </li>
+                <li onclick="changeBasemap('arcgis-light-gray',5)" title="Light Gray Map">
+                    <img alt="" class="esri-basemap-gallery__item-thumbnail" src="https://www.arcgis.com/sharing/rest/content/items/de45b9cad20141ebb82fae0da8b3e2c6/info/thumbnail/lightgray_thumb_b2wm.jpg?f=json">
+                </li>
+                <li onclick="changeBasemap('landscape',2)" title="Thunderforest Landscape Map">
+                    <img alt="Landscape Map" class="esri-basemap-gallery__item-thumbnail" src="images/LandscapeMap.png">
+                </li>
+                <li onclick="changeBasemap('usgsTopoMap',5)" title="USGS US Topo">
+                    <img alt="" class="esri-basemap-gallery__item-thumbnail" src="images/usgsTopoMap.jpeg">
+                </li>
+                <li onclick="changeBasemap('neighbourhood',6)" title="Thunderforest Neighbourhood Map">
+                    <img alt="Neighbourhood Map" class="esri-basemap-gallery__item-thumbnail" src="images/Neighborhood.png">
+                </li>
+                <!-- <li onclick="changeBasemap('terrain')" title="Stamen Terrain">
+                    <img alt="tamen Terrain" class="esri-basemap-gallery__item-thumbnail" src="https://stamen-tiles.a.ssl.fastly.net/terrain-background/10/177/409.png">   
+                </li> -->
+                <li onclick="changeBasemap('openCycleMap',7)" title="OpenCycleMap">
+                    <img alt="OpenCycleMap" class="esri-basemap-gallery__item-thumbnail" src="images/openCycleMap.png">
+                </li>
+                <li onclick="changeBasemap('arcgis-streets-relief',8)" title="Streets">
+                    <img alt="Streets" class="esri-basemap-gallery__item-thumbnail" src="https://www.arcgis.com/sharing/rest/content/items/f81bc478e12c4f1691d0d7ab6361f5a6/info/thumbnail/street_thumb_b2wm.jpg?f=json">
+                </li>
+                <li onclick="changeBasemap('osm-standard-relief',9)" title="OpenStreetMap">
+                    <img alt="OpenStreetMap" class="esri-basemap-gallery__item-thumbnail" src="https://www.arcgis.com/sharing/rest/content/items/c29cfb7875fc4b97b58ba6987c460862/info/thumbnail/thumbnail1547740877120.jpeg?f=json" style="border-color: #ff0099">   
+                </li>
+                <!-- <li onclick="changeBasemap('openStreetMapFance',10)" title="OpenStreetMap De">
+                    <img alt="penStreetMap France" class="esri-basemap-gallery__item-thumbnail" src="images/OpenStreetMapFrance.png" >   
+                </li> -->
+    
+            </ul>
+        </div>
+        <div id="dataList">
+            <div id="dataListTitle">Layers</div>
+            <ul>
+                <li title="All English Congregations" >
+                    <input id="spreadCheck" name="congButton" type="radio" onchange="switchView(0)" checked="checked" >All English Congregations
+                </li>
+                <li title="French Valley" >
+                    <input id="spreadCheck" name="congButton" type="radio" onchange="switchView(1)" >French Valley
+                </li>
+                <li title="RollingHills">
+                    <input id="spreadCheck" name="congButton" type="radio" onchange="switchView(2)" >Rolling Hills
+                </li>
+                <li title="TemeculaHills">
+                    <input id="spreadCheck" name="congButton" type="radio" onchange="switchView(3)" >Temecula Hills
+                </li>
+                <li title="TemeculaValley">
+                    <input id="spreadCheck" name="congButton" type="radio" onchange="switchView(4)" >Temecula Valley
+                </li>
+                <li title="Willows">
+                    <input id="spreadCheck" name="congButton" type="radio" onchange="switchView(5)" >Willows
+                </li>
+                <br/>
+                <li title="Kingdom Hall" >
+                    <input id="spreadCheck" type="checkbox" onchange="toggleKH(event)" checked="checked" >Kingdom Hall
+                </li>
+            </ul>
+        </div>        
+    </div>
+
+
+
+    <div id="infoDiv">
+        <input class="esri-component esri-widget-button esri-widget esri-interactive" type="button"
+          id="switchButton" value="3D">
+    </div>
+    <!-- <div id="magGlass" onclick="toggleMagnifier(event)" title="Magnifier"></div> -->
+    <!-- <div id="drawIcon" onclick="toggleSketch(event)" title="Draw Tools"></div> -->
+    <div id="legendButton" onclick="toggleLegend(event)" title="Legend"></div>
+    <div id="redSeaInfo">   </div>
+
+    <script>
+        gallery = document.getElementById("galleryList");
+        features = document.getElementById("dataList");
+        magGlass = document.getElementById("magGlass");
+        drawTool = document.getElementById("drawIcon");
+        galleryUL = document.getElementById("galleryUL")
+        collapseRight = document.getElementById("collapseRight");
+        mainBox = document.getElementById("mainBox");
+        rightPanel = document.getElementById("rightPanel");
+
+        locRef = window.location.href;
+        var lastIndex = locRef.lastIndexOf("/");
+        originalPath = locRef.substring(0,lastIndex);
+
+        // hide real url with fake one
+        // window.onload = function() {
+        //     var prefix = location.origin;
+        //     var url = prefix + "/FVC/";
+        //     history.pushState(location.href,null,url)
+        // }
+
+
+    </script>
+
+    <style>
+        /* esri overrides */
+        .esri-basemap-gallery__item-thumbnail {
+            height: 90px;
+            width: 100px;
+            object-fit: cover;
+            margin: 4px;
+            border: 2px solid #888888;
+        }
+        .esri-popup__main-container {
+            max-height: 500px!important;
+        }
+        .esri-popup__footer  {
+            display: none;
+        }
+
+        .esri-ui-bottom-left .esri-component  {
+            border: 1px solid #888888;
+        }
+
+        .esri-ui-bottom-left .esri-component.esri-legend.esri-widget--panel  {
+            width: 200px!important;
+        }
+    </style>
+
+  </body>
+</html>
