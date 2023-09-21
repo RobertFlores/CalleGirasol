@@ -508,7 +508,7 @@
         }
 
         const terrTemplate = {
-            title: "French Valley Territory",
+            title: "Territory",
             content: [
                 {
                     type: "fields",
@@ -575,7 +575,7 @@
         const congsLayer = new GeoJSONLayer({
             url: congsUrl,
             copyright: "",
-            title: "Other Congregations",
+            title: "English Congregations",
             renderer: congsRenderer,
             popupTemplate: congTemplate,
             opacity: 0.5,
@@ -624,21 +624,56 @@
             field: "TerritoryType",
             uniqueValueInfos: [
                 {value: "Business", symbol: {type: "simple-fill", color: [248,147,31,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
-                {value: "Rural", symbol: {type: "simple-fill",color: [0,167,108,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
-                {value: "Residential", symbol: {type: "simple-fill",color: [244,114,101,0.85], outline: {color: [0,0,0,1],width: "3px"}}}
+                {value: "Residential", symbol: {type: "simple-fill",color: [244,114,101,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Rural", symbol: {type: "simple-fill",color: [0,167,108,0.85], outline: {color: [0,0,0,1],width: "3px"}}}
             ]
         };
         const territoryRenderer2 = {
             type: "unique-value",
             field: "TerritoryType",
             uniqueValueInfos: [
-                {value: "Business", symbol: {type: "simple-fill", color: [248,147,31,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
-                {value: "Rural", symbol: {type: "simple-fill",color: [0,167,108,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
                 {value: "Apartments", symbol: {type: "simple-fill",color: [60,120,216,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Business", symbol: {type: "simple-fill", color: [248,147,31,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
+                {value: "Letter Writing", symbol: {type: "simple-fill",color: [250,209,101,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
                 {value: "Residential", symbol: {type: "simple-fill",color: [244,114,101,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
-                {value: "Letter Writing", symbol: {type: "simple-fill",color: [250,209,101,0.85], outline: {color: [0,0,0,1],width: "3px"}}}
+                {value: "Rural", symbol: {type: "simple-fill",color: [0,167,108,0.85], outline: {color: [0,0,0,1],width: "3px"}}}
             ]
         };
+        const rhTerrRenderer = {
+            type: "unique-value",
+            field: "TerritoryType",
+            uniqueValueInfos: [
+                {value: "H", symbol: {type: "simple-fill", color: [251,76,47,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
+                {value: "M", symbol: {type: "simple-fill", color: [74,134,232,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
+                {value: "P", symbol: {type: "simple-fill", color: [246,145,179,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
+                {value: "R", symbol: {type: "simple-fill", color: [250,209,101,0.75],outline: {color: [20,0,0,1],width: "3px"}  }}
+            ]
+                
+        };
+        const thTerrRenderer = {
+            type: "unique-value",
+            field: "TerritoryType",
+            uniqueValueInfos: [
+                {value: "Apartment", symbol: {type: "simple-fill",color: [255,173,71,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Business", symbol: {type: "simple-fill", color: [67,214,146,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
+                {value: "SPECIAL USE ONLY", symbol: {type: "simple-fill",color: [31,51,76,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Temecula Rurals", symbol: {type: "simple-fill",color: [74,134,232,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Territory", symbol: {type: "simple-fill",color: [251,76,47,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Warner Springs", symbol: {type: "simple-fill",color: [182,87,117,0.85], outline: {color: [0,0,0,1],width: "3px"}}}
+            ]
+        };
+        const willTerrRenderer = {
+            type: "unique-value",
+            field: "TerritoryType",
+            uniqueValueInfos: [
+                {value: "Apt", symbol: {type: "simple-fill",color: [213,174,73,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Biz", symbol: {type: "simple-fill", color: [60,120,216,0.75],outline: {color: [20,0,0,1],width: "3px"}  }},
+                {value: "L- Writing", symbol: {type: "simple-fill",color: [247,167,192,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Res", symbol: {type: "simple-fill",color: [230,101,80,0.85], outline: {color: [0,0,0,1],width: "3px"}}},
+                {value: "Rural", symbol: {type: "simple-fill",color: [164,121,226,0.85], outline: {color: [0,0,0,1],width: "3px"}}}
+            ]
+        };
+        
 
         const fvTerrLayer = new GeoJSONLayer({
             url: fvTerrUrl,
@@ -652,6 +687,7 @@
         terrLayer = fvTerrLayer;
         const terrLabelClass = new LabelClass({
             labelExpressionInfo: { expression: "$feature.TerritoryTypeCode + '-' + $feature.TerritoryNumber" },
+            // labelExpressionInfo: { expression: "$feature.TerritoryNumber" },
             symbol: {
                 type: "text",  // autocasts as new TextSymbol()
                 color: [0,0,0, 128],  // white
@@ -663,7 +699,19 @@
         terrLayer.labelingInfo = terrLabelClass;
         territoryLayers.push(fvTerrLayer);
 
-        const rhUrl = "RollingHills.json";
+        const terrLabelClass2 = new LabelClass({
+            labelExpressionInfo: { expression: "$feature.name" },
+            symbol: {
+                type: "text",  // autocasts as new TextSymbol()
+                color: [0,0,0, 128],  // white
+                font: { family: "Arial Unicode MS", size: 8, weight: "bold" },
+                haloColor: [255, 255, 255, 128],  // black
+                haloSize: 1
+            }
+        });
+
+
+        const rhUrl = "RollingHills.geojson";
         const rhLayer = new GeoJSONLayer({
             url: rhUrl,
             copyright: "",
@@ -724,7 +772,7 @@
         // extents.push(new Extent(-117.19877,33.48413,-116.96872,33.65994, new SpatialReference({ wkid:4326 })));
         extents.push(new Extent(-117.22449,33.46376,-116.92891,33.68046, new SpatialReference({ wkid:4326 })));
 
-        tvTerrUrl = "temecula_valley_congregation.json";
+        var tvTerrUrl = "temecula_valley_congregation.json";
         const tvTerrLayer = new GeoJSONLayer({
             url: tvTerrUrl,
             copyright: "",
@@ -738,11 +786,50 @@
 
         TVterrLayer.labelingInfo = terrLabelClass;
 
+        var rhTerrUrl = "rolling_hills.json";
+        const rhTerrLayer = new GeoJSONLayer ({
+            url: rhTerrUrl,
+            copyright: "",
+            renderer: rhTerrRenderer,
+            title: "Rolling Hills Territories",
+            popupTemplate: terrTemplate,
+            opacity: 0.25,
+            visible: false
+        });
+        RHterrLayer = rhTerrLayer;
+        rhTerrLayer.labelingInfo = terrLabelClass2;
+
+        var thTerrUrl = "temecula-hills.json";
+        const thTerrLayer = new GeoJSONLayer ({
+            url: thTerrUrl,
+            copyright: "",
+            renderer: thTerrRenderer,
+            title: "Temecula Hills Territories",
+            popupTemplate: terrTemplate,
+            opacity: 0.25,
+            visible: false
+        });
+        THterrLayer = thTerrLayer;
+        thTerrLayer.labelingInfo = terrLabelClass;
+
+        var willTerrUrl = "willows_congregation.json";
+        const willTerrLayer = new GeoJSONLayer ({
+            url: willTerrUrl,
+            copyright: "",
+            renderer: willTerrRenderer,
+            title: "Willows Territories",
+            popupTemplate: terrTemplate,
+            opacity: 0.25,
+            visible: false
+        });
+        WTerrLayer = willTerrLayer;
+        willTerrLayer.labelingInfo = terrLabelClass2;
+
         // territory layers
-        territoryLayers.push(null); // Rolling Hills
-        territoryLayers.push(null); // Temecula Hills
+        territoryLayers.push(rhTerrLayer); // Rolling Hills
+        territoryLayers.push(thTerrLayer); // Temecula Hills
         territoryLayers.push(tvTerrLayer); // Temecula Valley
-        territoryLayers.push(null); // Willows
+        territoryLayers.push(willTerrLayer); // Willows
 
 
 
@@ -964,6 +1051,9 @@
                     willLayer,        
                     terrLayer,
                     tvTerrLayer,
+                    rhTerrLayer,
+                    thTerrLayer,
+                    willTerrLayer,
                     khallLayer,
                     graphicsLayer
                 ]
