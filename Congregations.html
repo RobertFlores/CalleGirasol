@@ -295,6 +295,34 @@
             border: 1px solid #666;
             color: black;
         }
+        #addressInfoBox{
+            position: absolute;
+            left: 50px;
+            top: 124px;
+            min-width: 200px;
+            max-width: 700px;
+            min-height: 30px;           
+            border: 2px solid #CCC;
+            padding: 0 0 10px 10px;
+            display: none;
+            background-color: white;
+            border-radius: 5px;
+        }
+        #closeAddressInfo {
+            padding: 0;
+            margin: 2px;
+            border: 1px solid #888;
+            float: right;
+            cursor: pointer;
+            color: #888;
+            font-family: "Comic Sans MS Bold","Comic Sans MS","Gill Sans", sans-serif!important;
+        }
+        #addressInfo {
+            float: left;
+            margin: 10px 20px 0 0;
+            font-size: 14px!important;
+        }
+
 
     </style>
 
@@ -449,10 +477,16 @@
         }
 
 
-            function showSearch() {
-                searchBox.style.display = addressOn ? "none" : "block";
-                addressOn = !addressOn;
-            }
+        function showSearch() {
+            searchBox.style.display = addressOn ? "none" : "block";
+            addressOn = !addressOn;
+            addressInfoBox.style.display = "none";
+        }
+
+        function hideAddressInfo() {
+            addressInfoBox.style.display = "none";
+        }
+        
 
 
 
@@ -1256,8 +1290,25 @@
                     console.log(featureCollection);
                     const foundAddress = featureCollection.features[0];
                     var prop = foundAddress.properties;
-                    const info = prop.formatted ;
-                    const box = prop.bbox;
+                    var addData = "<b>" + prop.formatted + "</b>";
+                    const locPoint = new Point(prop.lon,prop.lat);
+                    congsLayer.queryFeatures({
+                        geometry: locPoint,
+                        spatialReferenceship: "intersects",
+                        returnGeometry: false,
+                        returnQueryGeometry: true,
+                        outFields: ["*"]
+                    })
+                        .then((featureSet) => {
+                            if (featureSet.features[0]) {
+                                addData += "<br/>This location is within the " + featureSet.features[0].attributes.Name + " congregation boundary."; 
+                                addressInfo.innerHTML = addData;
+                                addressInfoBox.style.display = "block";
+
+                            }
+                            // alert(info);
+                        });
+
                     // alert(info);
                     graphicsLayer.removeAll();
                     graphicsLayer.add({
@@ -1277,10 +1328,9 @@
                         },
                         popupTemplate: {
                             title: "Address",
-                            content: info
+                            content: addData
                         }
                     });
-
                     appConfig.activeView.goTo({
                         center: [prop.lon, prop.lat],
                         zoom: 16
@@ -1291,6 +1341,9 @@
                     });
                     addressInput.value = "";
                     showSearch();
+                    addressInfo.innerHTML = addData;
+                    addressInfoBox.style.display = "block";
+
                 });
             }
         
@@ -1400,7 +1453,13 @@
     </div>
     <!-- <div id="drawIcon" onclick="toggleSketch(event)" title="Draw Tools"></div> -->
     <div id="legendButton" onclick="toggleLegend(event)" title="Legend"></div>
-    <div id="redSeaInfo">   </div>
+    <div id="addressInfoBox">   
+        <div id="closeAddressInfo" onclick="hideAddressInfo()">X</div>
+        <div id="addressInfo">
+            <!-- <b>Steet Address, City, State Zip</b><br/>
+            This location is located within the local congregation boundary. -->
+        </div>
+    </div>
     <div id="searchBox">
         <input id="address" type="text" placeholder="Address Street, City State Zip" style="width: 375px"> <input id="searchBtton" class="esri-component esri-widget-button esri-widget esri-interactive" type="button" style="border: 1px solid #666;
         color: black;" value="Search">
@@ -1417,6 +1476,8 @@
         mainBox = document.getElementById("mainBox");
         rightPanel = document.getElementById("rightPanel");
         searchBox = document.getElementById("searchBox");
+        addressInfoBox = document.getElementById("addressInfoBox");
+        addressInfo = document.getElementById("addressInfo");
         
 
         locRef = window.location.href;
