@@ -649,7 +649,12 @@
         territoryLayers[0] = null;
         extents.push(new Extent(-117.22908,33.17988,-116.4438,33.67024, new SpatialReference({ wkid:4326 })));
 
-
+        const nearbyUrl = "NearbyCongregations.geojson";
+        const nearbyLayer = new GeoJSONLayer ({
+            url: nearbyUrl,
+            title: "Nearby Congregations",
+            visible: false
+        })
 
         const fvUrl = "FrenchValley.geojson";
         const fvRenderer = {
@@ -786,7 +791,7 @@
         extents.push(new Extent(-117.18623,33.54571,-117.10462,33.64970, new SpatialReference({ wkid:4326 })));
 
 
-        const thUrl = "TemeculaHills.json";
+        const thUrl = "TemeculaHills.geojson";
         const thLayer = new GeoJSONLayer({
             url: thUrl,
             copyright: "",
@@ -800,7 +805,7 @@
         extents.push(new Extent(-117.22908,33.17988,-116.4438,33.67024, new SpatialReference({ wkid:4326 })));
 
 
-        const tvUrl = "TemeculaValley.json";
+        const tvUrl = "TemeculaValley.geojson";
         const tvLayer = new GeoJSONLayer({
             url: tvUrl,
             copyright: "",
@@ -816,7 +821,7 @@
         extents.push(new Extent(-117.20351,33.44307,-116.85074,33.62086, new SpatialReference({ wkid:4326 })));
 
 
-        const willUrl = "Willows.json";
+        const willUrl = "Willows.geojson";
         const willLayer = new GeoJSONLayer({
             url: willUrl,
             copyright: "",
@@ -1117,6 +1122,7 @@
                     rhTerrLayer,
                     thTerrLayer,
                     willTerrLayer,
+                    nearbyLayer,
                     khallLayer,
                     graphicsLayer
                 ]
@@ -1292,7 +1298,7 @@
                     var prop = foundAddress.properties;
                     var addData = "<b>" + prop.formatted + "</b>";
                     const locPoint = new Point(prop.lon,prop.lat);
-                    congsLayer.queryFeatures({
+                    nearbyLayer.queryFeatures({
                         geometry: locPoint,
                         spatialReferenceship: "intersects",
                         returnGeometry: false,
