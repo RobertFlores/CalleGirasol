@@ -36,6 +36,57 @@
             top: 0;
             border: 2px solid black;
         }
+        #leftTopPannel {
+            position:absolute;
+            left: 0;
+            top: 0;
+            width: 304px;
+            height: 180px;
+            background-image: url(images/WorldPowers-top.png);
+        }
+        #leftBottomPannel {
+            position:absolute;
+            left: 0;
+            top: 180px;
+            width: 365px;
+            height: 750px;
+            background-image: url(images/WorldPowers-bottom.png);
+        }
+        #babylonClick {
+            position: absolute;
+            left: 5px;
+            top: 200px;
+            width: 120px;
+            height: 70px;        
+            }
+        #medoClick {
+            position: absolute;
+            left: 5px;
+            top: 305px;
+            width: 120px;
+            height: 70px;
+        }
+        #greeceClick {
+            position: absolute;
+            left: 5px;
+            top: 420px;
+            width: 120px;
+            height: 80px;
+        }
+        #romeClick {
+            position: absolute;
+            left: 5px;
+            top: 540px;
+            width: 115px;
+            height: 80px;
+        }
+        #angloAmerClick {
+            position: absolute;
+            left: 5px;
+            top: 670px;
+            width: 120px;
+            height: 43px;
+        }
         .buttonColors {
           background-color: rgba(255,255,255,0.1);
           cursor: pointer;
@@ -1324,9 +1375,9 @@
                 <li onclick="changeBasemap('usgsImageryMap',1)" title="USGS USImagery">
                     <img alt="USGS USImagery" class="esri-basemap-gallery__item-thumbnail" src="images/usgsImagery.jpg">
                 </li>
-                <!-- <li onclick="changeBasemap('watercolor',3)" title="Watercolor">
+                <li onclick="changeBasemap('watercolor',3)" title="Watercolor">
                     <img alt="" class="esri-basemap-gallery__item-thumbnail" src="images/watercolor.png">
-                </li> -->
+                </li>
                 <li onclick="changeBasemap('watercolor2',3)" title="Watercolor 2">
                     <img alt="" class="esri-basemap-gallery__item-thumbnail" src="images/watercolor2.png">
                 </li>
@@ -1360,9 +1411,9 @@
                 <li onclick="changeBasemap('osm-standard-relief',9)" title="OpenStreetMap">
                     <img alt="OpenStreetMap" class="esri-basemap-gallery__item-thumbnail" src="https://www.arcgis.com/sharing/rest/content/items/c29cfb7875fc4b97b58ba6987c460862/info/thumbnail/thumbnail1547740877120.jpeg?f=json" style="border-color: #ff0099">   
                 </li>
-                <li onclick="changeBasemap('openStreetMapFance',10)" title="OpenStreetMap De">
+                <!-- <li onclick="changeBasemap('openStreetMapFance',10)" title="OpenStreetMap De">
                     <img alt="penStreetMap France" class="esri-basemap-gallery__item-thumbnail" src="images/OpenStreetMapFrance.png" >   
-                </li>
+                </li> -->
     
             </ul>
         </div>
