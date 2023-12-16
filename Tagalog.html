@@ -6,7 +6,7 @@
           content="initial-scale=1,maximum-scale=1,user-scalable=no"
         />
         <title>
-          Calle Girasol Spanish Congregation
+          Calle Girasol Tagaol Congregation
         </title>
         <link
           rel="stylesheet"
@@ -304,7 +304,8 @@
             var activeLayer = 0;
             var addressOn = false;
             var addressGraphic;
-            var spanishCong;
+            var tagalogCong;
+            
             
     
             function changeBasemap (name, index) {
@@ -352,9 +353,9 @@
                 }
             }
     
-            function toggleSpanish (e) {
+            function toggleTagalog (e) {
                 var checkbox = e.target;
-                spanishCong.visible = checkbox.checked;
+                tagalogCong.visible = checkbox.checked;
             }
     
             function toggleKH(e) {
@@ -524,14 +525,14 @@
             }
     
             const khTemplate = {
-                title: "Salón del Reino de los Testigos de Jehová",
+                title: "Kingdom Hall ng mga Saksi ni Jehova",
                 content: [
                     {
                         type: "fields",
                         fieldInfos: [
                             {
                                 fieldName: "Address",
-                                label: "Dirección"
+                                label: "Tinitirahan"
                             }
                         ]
                     }
@@ -551,7 +552,7 @@
                 }
             });
     
-            const congsUrl = "SpanishMurrieta.geojson";
+            const congsUrl = "Tagalog.geojson";
             const congsRenderer = {
                 type: "simple",
     
@@ -567,13 +568,13 @@
             const congsLayer = new GeoJSONLayer({
                 url: congsUrl,
                 copyright: "",
-                title: "Congregación Española",
+                title: "Kongregasyon ng Tagalog",
                 renderer: congsRenderer,
                 // popupTemplate: congTemplate,
                 opacity: 0.5,
                 visible: true
             });
-            spanishCong = congsLayer;
+            tagalogCong = congsLayer;
             // congsLayer.labelingInfo = [ congLabelClass ];
             // congsLayer.labelsVisble = true;
             layers.push(congsLayer);
@@ -595,7 +596,7 @@
             const khallLayer = new GeoJSONLayer({
                 url: khUrl,
                 copyright: "",
-                title: "Salón del Reino",
+                title: "Kingdom Hall ng mga Saksi ni Jehova",
                 renderer: khRenderer,
                 opacity: 1,
                 popupTemplate: khTemplate,
@@ -795,8 +796,8 @@
     
             var initialViewParams = {
                 map: map,
-                zoom: 12,
-                center: [-117.0979,33.57716],
+                zoom: 10,
+                center: [-117.13581,33.68273],
                 container: appConfig.container
             };
     
@@ -943,7 +944,7 @@
                     const address = addressInput.value;
                     if (!address || address.length < 3) {
                         // console.log("The address string is too short. Enter at least three symbols");
-                        alert("La cadena de dirección es demasiado corta. Introduzca al menos tres caracteres");
+                        alert("Ang string ng address ay masyadong maikling. Magpasok ng hindi bababa sa tatlong character");
                         return;
                     }
     
@@ -953,7 +954,7 @@
                     fetch(geocodingUrl).then(result => result.json())
                         .then(featureCollection => {
                         if (featureCollection.features.length === 0) {
-                            alert("La dirección no se encuentra");
+                            alert("Hindi nasumpungan ang address");
                             return;
                         }
                         console.log(featureCollection);
@@ -1026,11 +1027,11 @@
     <body>
         <div id="mainBox" >
             <div id="viewDiv"></div>
-            <div id="collapseRight" onclick="toggleRightSide()" title="Mostrar/Ocultar panel"></div>
+            <div id="collapseRight" onclick="toggleRightSide()" title="Ipakita/ I-hide ang Panel"></div>
         </div>
         <div id="rightPanel">
             <div id="galleryList" >
-                <div id="galleryTitle">Estilo de mapa</div>
+                <div id="galleryTitle">Estilo ng Mapa</div>
                 <ul id="galleryUL">
                     <li onclick="changeBasemap('satellite',0)" title="Imagery">
                         <img alt="Imagery" class="esri-basemap-gallery__item-thumbnail" src="https://www.arcgis.com/sharing/rest/content/items/86de95d4e0244cba80f0fa2c9403a7b2/info/thumbnail/thumbnail1591224931210.jpeg?f=json">
@@ -1081,14 +1082,14 @@
                 </ul>
             </div>
             <div id="dataList">
-                <div id="dataListTitle">Estratos</div>
+                <div id="dataListTitle">Mga Layer</div>
                 <ul>
                     <li title="Límite de la congregación Española" >
-                        <input id="spreadCheck" type="checkbox" onchange="toggleSpanish(event)" checked="checked" >Límite de la congregación Española
+                        <input id="spreadCheck" type="checkbox" onchange="toggleSpanish(event)" checked="checked" >Batas ng Kongregasyon ng Tagalog
                     </li>
                     <br/>
                     <li title="salón del Reino" >
-                        <input id="spreadCheck" type="checkbox" onchange="toggleKH(event)" checked="checked" >Salón del Reino
+                        <input id="spreadCheck" type="checkbox" onchange="toggleKH(event)" checked="checked" >Kaharian ng Kaharian
                     </li>
                 </ul>
             </div>        
@@ -1100,11 +1101,11 @@
             <input class="esri-component esri-widget-button esri-widget esri-interactive" type="button"
               id="switchButton" value="3D" title="Alternar entre vistas 2D y 3D">
         </div>
-        <div id="magGlass" title="Búsqueda de direcciones" onclick="showSearch()">
+        <div id="magGlass" title="Paghahanap ng Address" onclick="showSearch()">
     
         </div>
         <!-- <div id="drawIcon" onclick="toggleSketch(event)" title="Draw Tools"></div> -->
-        <div id="legendButton" onclick="toggleLegend(event)" title="Leyenda"></div>
+        <div id="legendButton" onclick="toggleLegend(event)" title="Legenda"></div>
         <div id="addressInfoBox">   
             <div id="closeAddressInfo" onclick="hideAddressInfo()">X</div>
             <div id="addressInfo">
@@ -1113,8 +1114,8 @@
             </div>
         </div>
         <div id="searchBox">
-            <input id="address" type="text" placeholder="Dirección Calle, Ciudad Estado Código Postal" style="width: 375px"> <input id="searchBtton" class="esri-component esri-widget-button esri-widget esri-interactive" type="button" style="border: 1px solid #666;
-            color: black;" value="Buscar">
+            <input id="address" type="text" placeholder="Address ng Kalye, City State Zip" style="width: 375px"> <input id="searchBtton" class="esri-component esri-widget-button esri-widget esri-interactive" type="button" style="border: 1px solid #666;
+            color: black;" value="Maghanap">
         </div>
     
     
@@ -1170,6 +1171,6 @@
                 width: 200px!important;
             }
         </style>
-            Spanish
+            
     </body>
 </html>
